@@ -1,3 +1,4 @@
+const { execSync } = require('child_process');
 let file = require('file-utils');
 let fs =   require('fs-extra');
 let colors = require('colors');
@@ -11,11 +12,11 @@ let dir_common = path.join(dir,'common');
 let dir_frontend = path.join(dir,'frontend');
 let dir_game_machine = path.join(dir,'game_machine');
 
-let audit_exist = fs.existsSync(dir_audit);
-let backend_exist = fs.existsSync(dir_backend);
-let common_exist = fs.existsSync(dir_common);
-let frontend_exist = fs.existsSync(dir_frontend);
-let game_machine_exist = fs.existsSync(dir_game_machine);
+let audit_exist = fs.existsSync(path.join(dir_audit,'package.json'));
+let backend_exist = fs.existsSync(path.join(dir_backend,'package.json'));
+let common_exist = fs.existsSync(path.join(dir_common,'package.json'));
+let frontend_exist = fs.existsSync(path.join(dir_frontend,'package.json'));
+let game_machine_exist = fs.existsSync(path.join(dir_game_machine,'package.json'));
 
 // verify dir's exist
 if( !audit_exist || !backend_exist || !common_exist || !frontend_exist || !game_machine_exist ){
@@ -30,6 +31,8 @@ if( !audit_exist || !backend_exist || !common_exist || !frontend_exist || !game_
     if(!frontend_exist)console.log( `\t + ${ (dir_frontend.red) }` );
 
     if(!game_machine_exist)console.log( `\t + ${ (dir_game_machine.red) }` );
+
+    execSync('git pull --recurse-submodules');
 
     return;
 }
