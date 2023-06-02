@@ -32,7 +32,8 @@ if( !audit_exist || !backend_exist || !common_exist || !frontend_exist || !game_
 
     if(!game_machine_exist)console.log( `\t + ${ (dir_game_machine.red) }` );
 
-    execSync('git pull --recurse-submodules');
+    execSync('git submodule init && git pull --recurse-submodules');
+    execSync('git submodule update --remote');
 
     return;
 }
