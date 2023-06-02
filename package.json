@@ -1,18 +1,22 @@
 {
-  "name": "@warlords",
+  "name": "warlords",
   "version": "1.0.0",
   "description": "Workspace from Game City War RTS",
   "main": "index.js",
+  "engines": {
+    "npm": "^8.19.3",
+    "node": "^16.19.0"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "workspaces":[
-    "./common/package.json",
-    "./game_machine/package.json",
-    "./storage/package.json",
-    "./backend/package.json",
-    "./frontend/package.json"
-  ],
   "author": "Gil",
-  "license": "BSD"
+  "license": "BSD",
+  "workspaces": [
+    "common",
+    "game_machine",
+    "storage",
+    "backend",
+    "frontend"
+  ]
 }
