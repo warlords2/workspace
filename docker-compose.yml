@@ -4,10 +4,10 @@ services:
 #        extends:
 #            file: ./frontend/docker-compose.yml
 #            service: app
-#    backend:
-#        extends:
-#            file: ./backend/docker-compose.yml
-#            service: app
+    backend:
+        extends:
+            file: ./backend/docker-compose.yml
+            service: app
 #    game_machine:
 #        extends:
 #            file: ./game_machine/docker-compose.yml
@@ -27,10 +27,10 @@ services:
         extends:
             file: ./storage/docker-compose.yml
             service: database
-#        environment:
-#            - POSTGRES_USER=root
-#            - POSTGRES_PASSWORD=123456
-#            - POSTGRES_DB=warlords
+        environment:
+            - POSTGRES_USER=root
+            - POSTGRES_PASSWORD=123456
+            - POSTGRES_DB=warlords
 
 networks:
     back_net:
