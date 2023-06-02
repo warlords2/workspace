@@ -1,0 +1,18 @@
+[submodule "storage"]
+	path = storage
+	url = git@github.com:warlords2/storage.git
+[submodule "common"]
+	path = common
+	url = git@github.com:warlords2/common.git
+[submodule "audit"]
+	path = audit
+	url = git@github.com:warlords2/audit.git
+[submodule "backend"]
+	path = backend
+	url = git@github.com:warlords2/backend.git
+[submodule "game_machine"]
+	path = game_machine
+	url = git@github.com:warlords2/game_machine.git
+[submodule "frontend"]
+	path = frontend
+	url = git@github.com:warlords2/frontend.git
