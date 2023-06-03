@@ -5,10 +5,16 @@ services:
 #            file: ./frontend/docker-compose.yml
 #            service: app
     backend:
+        networks:
+            - back_net
+            - bridge_net
         extends:
             file: ./backend/docker-compose.yml
             service: app
 #    game_machine:
+#        networks:
+#            - back_net
+#            - bridge_net
 #        extends:
 #            file: ./game_machine/docker-compose.yml
 #            service: app
