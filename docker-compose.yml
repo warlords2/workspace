@@ -1,16 +1,28 @@
 version: '3.8'
 services:
-#    frontend:
-#        extends:
-#            file: ./frontend/docker-compose.yml
-#            service: app
+    frontend:
+        env_file: .env
+        networks:
+            - back_net
+            - bridge_net
+        extends:
+            file: ./frontend/docker-compose.yml
+            service: app
+        depends_on:
+            - backend
+            - storage
+            - cache
     backend:
+        env_file: .env
         networks:
             - back_net
             - bridge_net
         extends:
             file: ./backend/docker-compose.yml
             service: app
+        depends_on:
+            - storage
+            - cache
 #    game_machine:
 #        networks:
 #            - back_net
@@ -19,24 +31,21 @@ services:
 #            file: ./game_machine/docker-compose.yml
 #            service: app
     cache:
+        env_file: .env
         extends:
             file: ./backend/docker-compose.yml
-            service: memcached
+            service: cache
         networks:
             - back_net
-        environment:
-            - MEMCACHED_USERNAME=root
-            - MEMCACHED_PASSWORD=123456
     storage:
+        env_file: .env
         networks:
             - back_net
         extends:
             file: ./storage/docker-compose.yml
             service: database
-        environment:
-            - POSTGRES_USER=root
-            - POSTGRES_PASSWORD=123456
-            - POSTGRES_DB=warlords
+        volumes:
+            - ./db/postgresql:/var/lib/postgresql
 
 networks:
     back_net:
