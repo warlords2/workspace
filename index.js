@@ -1,4 +1,4 @@
-const { execSync } = require('child_process');
+const { execSync, exec, spawn } = require('child_process');
 let file = require('file-utils');
 let fs =   require('fs-extra');
 let colors = require('colors');
@@ -99,4 +99,91 @@ if(!fs.existsSync(file_env_game_machine)){
     fs.copyFileSync(file_env_example_game_machine, file_env_game_machine);
     console.log(` [  ${ ('OK'.green) }  ] Create Env`);
 }
+var continue_process = ()=>{};
+// verify database shema exist
+if(!fs.existsSync(path.join(dir_storage,'db'))){
+    
+    let file_storage_docker = path.join(dir_storage,'docker-compose.yml');
 
+    execSync(`docker-compose -f ${file_storage_docker} down`);
+
+    `docker-compose -f ${file_storage_docker} up`;
+    let docker_compose = spawn('docker-compose',[ '-f', file_storage_docker, 'up']);
+
+    let detectString = "database system is ready to accept connections";
+    var isDetect = false;
+
+    docker_compose.stderr.on('data', (data) => {
+
+        // Detect Database READY FOR CONNECTIONS
+        if((data.toString()+"").search(detectString) > 0){
+            isDetect = true;
+        };
+
+    });
+
+    var time_max = new Date().getMilliseconds() + 7000;
+    // timeout
+    var intervalId  = setInterval( ()=> {
+
+        let time_now = new Date().getMilliseconds();
+
+        if(isDetect){
+            
+            clearInterval(intervalId)
+
+            console.log(` [ ${ ('OK'.green) } ] Docker Database up`);
+            
+            console.log(` [ ${ ('Init'.blue) } ] Database Set Shema from TypeORM`);
+
+            exec(`cd ${dir_storage} && export DATABASE_HOST=localhost || set DATABASE_HOST=localhost && npm run schema:sync`,(err,stdout,stderr)=>{
+                
+                
+                let detectStringSyncro = "Schema synchronization finished successfully.";
+                if( (stdout+"").search(detectStringSyncro) > 0 ){
+                    // Continue!!!
+                    docker_compose.kill(2)
+                    //console.log(stdout)
+                    console.log(` [ ${ ('OK'.green) } ] Database Shema define`);
+                    continue_process()
+
+                } else {
+
+                    console.log("ERRO:",err)
+                    console.log("ERRO OUT:",stderr);
+                    console.log(` [ ${ ('Fail'.red) } ] Syncronization DATABASE error`);
+                    docker_compose.kill(2)
+
+                }
+                
+                
+                
+            })
+            
+
+        }else if(time_now > time_max){
+            
+            clearInterval(intervalId)
+
+            console.log(` [ ${ ('Fail'.red) } ] Docker Database error`);
+            
+            docker_compose.kill(2)
+        }
+    },500);
+
+    docker_compose.on('exit', (code) => {
+        if(code < 0)console.log(`Child exited with code ${code}`);
+    }); 
+
+    docker_compose.on('error', (err) => {
+        console.log(` [ ${ ('Fail'.red) } ] Docker Database error`);
+        console.log('Failed to start subprocess.');
+    });
+
+} else setTimeout(()=> continue_process(), 300);
+
+continue_process = ()=>{
+
+    console.log("Continuando processos!!!")
+
+}

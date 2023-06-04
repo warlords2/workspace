@@ -44,9 +44,6 @@ services:
         extends:
             file: ./storage/docker-compose.yml
             service: database
-        volumes:
-            - ./db/postgresql:/var/lib/postgresql
-
 networks:
     back_net:
         external: false
