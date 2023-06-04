@@ -136,7 +136,13 @@ if(!fs.existsSync(path.join(dir_storage,'db'))){
             
             console.log(` [ ${ ('Init'.blue) } ] Database Set Shema from TypeORM`);
 
-            exec(`cd ${dir_storage} && export DATABASE_HOST=localhost || set DATABASE_HOST=localhost && npm run schema:sync`,(err,stdout,stderr)=>{
+            let install_node_modules = "";
+            if( !fs.existsSync(path.join(dir_storage,'node_modules')) ){
+                  console.log(` [ ${ ('Init'.blue) } ] TypeORM node_modules not found `);
+                  install_node_modules =  "&& npm install";
+            }
+
+            exec(`cd ${dir_storage} ${install_node_modules} && export DATABASE_HOST=localhost || set DATABASE_HOST=localhost && npm run schema:sync`,(err,stdout,stderr)=>{
                 
                 
                 let detectStringSyncro = "Schema synchronization finished successfully.";
@@ -184,6 +190,7 @@ if(!fs.existsSync(path.join(dir_storage,'db'))){
 
 continue_process = ()=>{
 
-    console.log("Continuando processos!!!")
+    console.log("Run:")
+    console.log("\t docker compose up")
 
 }
