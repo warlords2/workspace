@@ -23,13 +23,13 @@ services:
         depends_on:
             - storage
             - cache
-#    game_machine:
-#        networks:
-#            - back_net
-#            - bridge_net
-#        extends:
-#            file: ./game_machine/docker-compose.yml
-#            service: app
+    game_machine:
+        env_file: .env
+        networks:
+            - back_net
+        extends:
+            file: ./game_machine/docker-compose.yml
+            service: app
     cache:
         env_file: .env
         extends:
