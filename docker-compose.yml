@@ -5,18 +5,18 @@ services:
         networks:
             - back_net
             - bridge_net
+        ports:
+            - ${FRONTEND_PORT}:${FRONTEND_PORT}
         extends:
             file: ./frontend/docker-compose.yml
             service: app
-        depends_on:
-            - backend
-            - storage
-            - cache
     backend:
         env_file: .env
         networks:
             - back_net
             - bridge_net
+        ports:
+            - ${BACKEND_PORT}:${BACKEND_PORT}
         extends:
             file: ./backend/docker-compose.yml
             service: app
@@ -27,9 +27,14 @@ services:
         env_file: .env
         networks:
             - back_net
+        ports:
+            - ${GAME_MACHINE_PORT}:${GAME_MACHINE_PORT}
         extends:
             file: ./game_machine/docker-compose.yml
             service: app
+        depends_on:
+            - storage
+            - cache
     cache:
         env_file: .env
         extends:
@@ -44,6 +49,13 @@ services:
         extends:
             file: ./storage/docker-compose.yml
             service: database
+    keycloak:
+        networks:
+            - back_net
+            - bridge_net
+        extends:
+            file: ./storage/docker-compose.yml
+            service: keycloak
 networks:
     back_net:
         external: false
