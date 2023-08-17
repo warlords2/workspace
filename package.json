@@ -15,6 +15,7 @@
   "license": "BSD",
   "workspaces": [
     "common",
+    "audit",
     "game_machine",
     "storage",
     "backend",
