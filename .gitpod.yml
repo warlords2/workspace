@@ -5,8 +5,8 @@
 # Learn more from ready-to-use templates: https://www.gitpod.io/docs/introduction/getting-started/quickstart
 
 tasks:
-  - init: git submodule init && git pull --recurse-submodules
-    command: git submodule update --remote && npm install && npm run start
+  - init: git submodule init && git submodule update --force --recursive --init --remote
+    command: npm install && npm run start
 vscode:
   extensions:
     - octref.vetur@0.23.0:TEzauMObB6f3i2JqlvrOpA==
