@@ -49,6 +49,21 @@ services:
         extends:
             file: ./storage/docker-compose.yml
             service: database
+    loki:
+        env_file: .env
+        networks:
+            - back_net
+        extends:
+            file: ./audit/docker-compose.yml
+            service: loki
+    grafana:
+        env_file: .env
+        networks:
+            - back_net
+            - bridge_net
+        extends:
+            file: ./audit/docker-compose.yml
+            service: grafana
     keycloak:
         networks:
             - back_net
