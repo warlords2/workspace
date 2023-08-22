@@ -102,7 +102,7 @@ if(!fs.existsSync(file_env_game_machine)){
 var continue_process = ()=>{};
 // verify database shema exist
 if(!fs.existsSync(path.join(dir_storage,'db'))){
-    
+    console.log("CREATE DATABASE")
     let file_storage_docker = path.join(dir_storage,'docker-compose.yml');
 
     execSync(`docker-compose -f ${file_storage_docker} down`);
@@ -114,7 +114,7 @@ if(!fs.existsSync(path.join(dir_storage,'db'))){
     var isDetect = false;
 
     docker_compose.stderr.on('data', (data) => {
-
+        console.log(data +"")
         // Detect Database READY FOR CONNECTIONS
         if((data.toString()+"").search(detectString) > 0){
             isDetect = true;
