@@ -3,3 +3,8 @@
 # Workspace
 
  Execution environment (Use for development)
+```
+$ git submodule init && git submodule update --force --recursive --init --remote
+$ npm install && npm run start
+$ docker compose up
+```
