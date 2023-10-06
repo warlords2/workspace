@@ -190,6 +190,8 @@ if(!fs.existsSync(path.join(dir_storage,'db'))){
 
 continue_process = ()=>{
 
+    exec(`cd ${dir_storage} && docker compose down`,(err,stdout,stderr)=>{})
+    
     console.log("Run:")
     console.log("\t docker compose up")
 

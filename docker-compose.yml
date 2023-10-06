@@ -44,6 +44,8 @@ services:
             - back_net
     storage:
         env_file: .env
+        volumes:
+            - ./storage/db/postgresql:/var/lib/postgresql
         networks:
             - back_net
         extends:
