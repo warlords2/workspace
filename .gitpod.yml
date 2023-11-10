@@ -6,7 +6,7 @@
 
 tasks:
   - init: git submodule init && git submodule update --force --recursive --init --remote
-    command: npm install && npm run start
+    command: npm install && npm run mounted
 vscode:
   extensions:
     - octref.vetur@0.23.0:TEzauMObB6f3i2JqlvrOpA==
