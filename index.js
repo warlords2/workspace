@@ -108,7 +108,7 @@ if(!fs.existsSync(path.join(dir_storage,'db'))){
     execSync(`docker-compose -f ${file_storage_docker} down`);
 
     `docker-compose -f ${file_storage_docker} up`;
-    let docker_compose = spawn('docker-compose',[ '-f', file_storage_docker, 'up']);
+    let docker_compose = spawn('docker-compose',['up']);
 
     let detectString = "database system is ready to accept connections";
     var isDetect = false;
@@ -122,7 +122,7 @@ if(!fs.existsSync(path.join(dir_storage,'db'))){
 
     });
 
-    var time_max = new Date().getMilliseconds() + 7000;
+    var time_max = new Date().getMilliseconds() + 59000;
     // timeout
     var intervalId  = setInterval( ()=> {
 
@@ -191,6 +191,7 @@ if(!fs.existsSync(path.join(dir_storage,'db'))){
 continue_process = ()=>{
 
     exec(`cd ${dir_storage} && docker compose down`,(err,stdout,stderr)=>{})
+    execSync(`docker-compose build`);
     
     console.log("Run:")
     console.log("\t docker compose up")
