@@ -101,6 +101,7 @@ if(!fs.existsSync(file_env_game_machine)){
 }
 var continue_process = ()=>{};
 // verify database shema exist
+// @todo resolver o problema de banco de dados, reescrevendo essa parte
 if(!fs.existsSync(path.join(dir_storage,'db'))){
     console.log("CREATE DATABASE")
     let file_storage_docker = path.join(dir_storage,'docker-compose.yml');
