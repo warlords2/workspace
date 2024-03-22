@@ -8,7 +8,7 @@
     "node": "18.12.0"
   },
   "scripts": {
-    "mounted":"node index.js",
+    "mounted": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Gil",
@@ -22,6 +22,7 @@
     "frontend"
   ],
   "dependencies": {
+    "@warlords/common": "^1.0.0",
     "colors": "^1.4.0",
     "dotenv": "^16.1.3",
     "file-utils": "^0.2.2",
